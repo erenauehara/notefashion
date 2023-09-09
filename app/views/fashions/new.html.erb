@@ -1,0 +1,42 @@
+<h1>Now Trend</h1>
+<h3>新規投稿ページ</h3>
+<%= form_for @fashion do |f| %>
+
+  <div class="field">
+    <%= f.label :Title %>
+    <%= f.text_field :title, :size => 30 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Genre  %>
+    <%= f.select :genre, 
+    [["fashion", "fashion"], 
+    ["word", "word"], 
+    ["news", "news"],
+    ["food", "food"],
+    ["music", "music"],
+    ["movie・TV", "movie・TV"],
+    ["things", "things"],
+    ["others", "others"]], include_blank: "選択して下さい" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label:本文 %>
+    <%= f.text_area :about, :size => "30x2" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Phot %>
+    <%= f.file_field :image %>
+  </div>
+
+
+
+  <%= f.submit "投稿する" %>
+
+
+<% end %>
+
+<%= link_to "一覧に戻る", fashions_path %>
+

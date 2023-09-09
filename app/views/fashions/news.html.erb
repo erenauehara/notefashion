@@ -1,0 +1,12 @@
+<h1>NEWS</h1>
+<% @fashion.each do |t| %>
+    <% if t.genre == "news" %>  
+    <p>タイトル:<%= t.title %></p>
+    <p>ジャンル:<%= t.genre %></p>
+    <p>内容:<%= t.about %></p>
+    <p>画像:<%= image_tag t.image_url, size: "250x200" if t.image? %></p>
+    <p>投稿日:<%= t.created_at %></p>
+    <% end %>
+  <% end %>
+
+  <%= link_to "一覧に戻る", fashions_path %>

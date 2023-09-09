@@ -1,0 +1,53 @@
+<h1>Now Trend</h1>
+<h3>Fashion詳細</h3>
+<%= image_tag @fashion.image_url, size: "400x300" if @fashion.image? %>
+
+<div class="fashion">
+  <p><%= @fashion.title %></p>
+  <p><%= @fashion.genre %></p>
+  <p><%= @fashion.about %></p>
+  <p><%= @fashion.image %></p>
+  <p><%= @fashion.created_at %></p>
+   <% if user_signed_in? %>
+    <% if current_user.already_liked?(@fashion) %>
+     <%= link_to fashion_like_path(@fashion), method: :delete do %>
+      <i class="fas fa-heart"></i><%= @fashion.likes.count %>
+     <% end %>
+  <% else %>
+    <%= link_to fashion_likes_path(@fashion), method: :post do %>
+      <i class="far fa-heart"></i><%= @fashion.likes.count %>
+    <% end %>
+  <% end %>
+<% else %>
+  <i class="far fa-heart"></i><%= @fashion.likes.count %>
+<% end %>
+<%= link_to "編集する", edit_fashion_path(@fashion.id) %>
+</div>
+
+<h2>いいねしたユーザー</h2>
+<% @fashion.liked_users.each do |user| %>
+  <li><%= user.email %></li>
+<% end %>
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@fashion, @comment], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "一覧に戻る", fashions_path %>
